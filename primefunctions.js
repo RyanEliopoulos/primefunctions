@@ -30,3 +30,15 @@ function primeGen(thresholdNumber) {
   }
   return primes;
 }
+
+// Problem 2: Cumulative Sum
+function cumulativeSum(array) {
+  const sums = { sum: 0, iterativeSums: [] };
+  function iterativeSummation(element) {
+    this.sum += element;
+    this.iterativeSums.push(this.sum);
+  }
+  array.forEach(iterativeSummation, sums);
+  return sums.iterativeSums;
+}
+
