@@ -43,7 +43,7 @@ function cumulativeSum(array) {
 }
 
 // Problem 3: Max Prime Sum
-// Works but takes forever. Needs improvement.
+// Utilizes nested function for recursively evaluating prime array subsets.
 function maxPrimeSum(thresholdNumber) {
   // Recursive function for evaluating all subsets of a given prime number array.
   function maxxer(primeSubset, primeOriginal) {
@@ -98,7 +98,7 @@ function maxPrimeSum(thresholdNumber) {
 }
 
 // Problem 1 results
-const primeGenResults = primeGen(1000);
+const primeGenResults = primeGen(100);
 console.log(primeGenResults);
 
 // Problem 2 results
