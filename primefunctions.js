@@ -54,7 +54,7 @@ function maxPrimeSum(thresholdNumber) {
     let currentSum = 0;
 
     // Iterating through each prime number, beginning with the smallest
-    // in primeSubset, to determine the local term and sum maximums.
+    // in primeSubset, to determine the local term and local sum maximums.
     const subLength = primeSubset.length;
     let i = 0;
     for (i; i < subLength; i++) {
@@ -72,42 +72,23 @@ function maxPrimeSum(thresholdNumber) {
         maxSum = currentSum;
       }
     }
+
     // Evaluating each subset of primeSubset, if they exist
-    // First: Omit the first element of the array
-    // Second: Omit the last element of the array
     if (subLength === 1) {
       return { terms: maxTerms, sum: maxSum };
     }
-    // for quickly checking left and right recursive bests
-    function termEvaluator(evalTerms, evalSum, maxxRet) {
-      let updatedTerms = evalTerms;
-      let updatedSum = evalSum;
-      if (maxxRet.terms > evalTerms) {
-        updatedTerms = maxxRet.terms;
-        updatedSum = maxxRet.sum;
-      } else if (maxxRet.terms === evalTerms && maxxRet.sum > evalSum) {
-        updatedSum = maxxRet.sum;
-      }
-      return { terms: updatedTerms, sum: updatedSum };
+    // Beginning subset evaluation
+    const nextSubset = primeSubset.slice(1);
+    const ret = maxxer(nextSubset, primeOriginal);
+    if (ret.terms > maxTerms) {
+      maxTerms = ret.terms;
+      maxSum = ret.sum;
+    } else if (ret.terms === maxTerms && ret.sum > maxSum) {
+      maxSum = ret.sum;
     }
-
-    // Beginning left subset evaluation
-    const leftSubset = primeSubset.slice(1);
-    let ret = maxxer(leftSubset, primeOriginal);
-    let evalRet = termEvaluator(maxTerms, maxSum, ret);
-    maxTerms = evalRet.terms;
-    maxSum = evalRet.sum;
-
-    // Beginning right subset evaluation
-    const rightSubset = primeSubset.slice(0, subLength - 1);
-    ret = maxxer(rightSubset, primeOriginal);
-    evalRet = termEvaluator(maxTerms, maxSum, ret);
-    maxTerms = evalRet.terms;
-    maxSum = evalRet.sum;
-
     return { terms: maxTerms, sum: maxSum };
   }
-
+  // maxPrimeSum continues here
   const primeArray = primeGen(thresholdNumber);
   const returnArray = [];
   const primeAnswer = maxxer(primeArray, primeArray);
@@ -116,5 +97,14 @@ function maxPrimeSum(thresholdNumber) {
   return returnArray;
 }
 
-const test = maxPrimeSum(1000);
-console.log(test);
+// Problem 1 results
+const primeGenResults = primeGen(1000);
+console.log(primeGenResults);
+
+// Problem 2 results
+const cumulativeSumResults = cumulativeSum([1, 2, 3, 4]);
+console.log(cumulativeSumResults);
+
+// Problem 3 results
+const maxPrimeSumResults = maxPrimeSum(1000);
+console.log(maxPrimeSumResults);
