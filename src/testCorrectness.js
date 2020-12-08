@@ -1,15 +1,15 @@
-//import { primeGen } from 'primefunctions.js';
+/* global primeGen, cumulativeSum, maxPrimeSum */
 
 /* Beginning primeGen tests */
 describe('Test for Correctness', function () {
   describe('PrimeGen', function () {
     it('primeGen(10) = [2, 3, 5, 7]',
       function () {
-        chai.expect(primeGen(10).toString()).to.equal('2,3,5,7');
+        chai.expect(primeGen(10)).to.deep.equal([2, 3, 5, 7]);
       });
     it('primeGen(20) = [2, 3, 5, 7, 11, 13, 17, 19]',
       function () {
-        chai.expect(primeGen(20).toString()).to.equal('2,3,5,7,11,13,17,19');
+        chai.expect(primeGen(20)).to.deep.equal([2, 3, 5, 7, 11, 13, 17, 19]);
       });
   });
 
@@ -17,11 +17,11 @@ describe('Test for Correctness', function () {
   describe('cumulativeSum', function () {
     it('cumulativeSum([1, 2, 3, 4]) = [1, 3, 6, 10]',
       function () {
-        chai.expect(cumulativeSum([1, 2, 3, 4]).toString()).to.equal('1,3,6,10');
+        chai.expect(cumulativeSum([1, 2, 3, 4])).to.deep.equal([1, 3, 6, 10]);
       });
     it('cumulativeSum([10, 11, 12, 13, 14]) = [10, 21, 33, 46, 60]',
       function () {
-        chai.expect(cumulativeSum([10, 11, 12, 13, 14]).toString()).to.equal('10,21,33,46,60');
+        chai.expect(cumulativeSum([10, 11, 12, 13, 14])).to.deep.equal([10, 21, 33, 46, 60]);
       });
   });
 
@@ -29,11 +29,11 @@ describe('Test for Correctness', function () {
   describe('maxPrimeSum', function () {
     it('maxPrimeSum(100) = [41, 6]',
       function () {
-        chai.expect(maxPrimeSum(100).toString()).to.equal('41,6');
+        chai.expect(maxPrimeSum(100)).to.deep.equal([41, 6]);
       });
     it('maxPrimeSum(1000) = [953, 21]',
       function () {
-        chai.expect(maxPrimeSum(1000).toString()).to.equal('953,21');
+        chai.expect(maxPrimeSum(1000)).to.deep.equal([953, 21]);
       });
   });
 });
