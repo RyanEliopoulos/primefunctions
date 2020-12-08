@@ -60,7 +60,7 @@ function maxPrimeSum(thresholdNumber) {
     for (i; i < subLength; i++) {
       // Checking if next sum would exceed our largest prime
       const nextNumber = primeSubset[i];
-      if (currentSum + nextNumber > primeOriginal[subLength - 1]) {
+      if (currentSum + nextNumber > primeOriginal[-1]) {
         break;
       }
       // Largest prime not exceeded.  Incrementing iteration variables.
@@ -98,7 +98,7 @@ function maxPrimeSum(thresholdNumber) {
 }
 
 // Problem 1 results
-const primeGenResults = primeGen(100);
+const primeGenResults = primeGen(500);
 console.log(primeGenResults);
 
 // Problem 2 results
@@ -106,5 +106,5 @@ const cumulativeSumResults = cumulativeSum([1, 2, 3, 4]);
 console.log(cumulativeSumResults);
 
 // Problem 3 results
-const maxPrimeSumResults = maxPrimeSum(1000);
+const maxPrimeSumResults = maxPrimeSum(500);
 console.log(maxPrimeSumResults);
