@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html0 lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="https://unpkg.com/mocha/mocha.css" rel="stylesheet"/>
 </head>
 <body>
-
+<div id="mocha"></div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://unpkg.com/chai/chai.js"></script>
+<script src="https://unpkg.com/mocha/mocha.js"></script>
+<script>mocha.setup('bdd')</script>
+<script src="primefunctions.js"></script>
+<script src="testCorrectness.js"></script>
+<script>mocha.run();</script>
 </body>
-</html0>
+</html>
