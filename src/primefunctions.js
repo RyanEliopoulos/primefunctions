@@ -106,5 +106,8 @@ const cumulativeSumResults = cumulativeSum([1, 2, 3, 4]);
 console.log(cumulativeSumResults);
 
 // Problem 3 results
-const maxPrimeSumResults = maxPrimeSum(500);
+const maxPrimeSumResults = maxPrimeSum(10000);
 console.log(maxPrimeSumResults);
+
+let prms = primeGen(10000);
+console.log(cumulativeSum(prms));

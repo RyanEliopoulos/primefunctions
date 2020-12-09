@@ -2,7 +2,12 @@
   Ryan Paulos
   CS 320
   Assignment 5 - Coding Standards (ESLint) and Git
-  10/28/2020
+  NEW ALGORITHM: Start at the beginning, include a total sum
+  Just walk up like a caterpillar..Once a slice exceeds the threshold move the right index back one, to the prime number
+  just before the one that sent the total over the threshold.  Then pull the left index up by one, freeing up some
+  space.  Then try moving the right index again. Repeat.
+  When leftPost is pulled up one we should move rightPost backward until the slice length equals
+  highestPrimeTermCount + 1
  */
 
 // Problem 1: Prime Number Generator
@@ -43,58 +48,50 @@ function cumulativeSum(array) {
 }
 
 // Problem 3: Max Prime Sum
-// Utilizes nested function for recursively evaluating prime array subsets.
 function maxPrimeSum(thresholdNumber) {
-  // Recursive function for evaluating all subsets of a given prime number array.
-  function maxxer(primeSubset, primeOriginal) {
-    // Initializing counter variables
-    let maxTerms = 0;
-    let maxSum = 0;
-    let currentTerms = 0;
-    let currentSum = 0;
-
-    // Iterating through each prime number, beginning with the smallest
-    // in primeSubset, to determine the local term and local sum maximums.
-    const subLength = primeSubset.length;
-    let i = 0;
-    for (i; i < subLength; i++) {
-      // Checking if next sum would exceed our largest prime
-      const nextNumber = primeSubset[i];
-      if (currentSum + nextNumber > primeOriginal[-1]) {
-        break;
+  // These walk the array of prime numbers and provide
+  // the permutations.
+  let leftPost = 0;
+  let rightPost = 0;
+  // The primes themselves
+  const primes = primeGen(thresholdNumber);
+  // running sum of the prime numbers held within leftPost and rightPost (inclusive).
+  // Note, this value grows and shrinks
+  let runningSum = 0;
+  let termCount = 1;
+  let highestPrime = 0;
+  let highestPrimeTermCount = 0;
+  // Exit condition: left_post === right_post >= threshold number
+  runningSum += primes[leftPost];
+  while (1) {
+    // Establishing exit condition (no more possible permutations of primes)
+    rightPost += 1;
+    runningSum += primes[rightPost];
+    termCount += 1;
+    // Checks if primes now exceed the threshold.
+    // Walks the last rightPost movement back 1
+    // and moves the leftPost right until once again under
+    // the thresholdNumber or leftPost == rightPost, indicating no further combinations are possible.
+    if (runningSum >= thresholdNumber) {
+      // Pull leftPost up one
+      if (leftPost === rightPost) { break; } // Left post would be getting ahead of right post. Permutations exhausted
+      runningSum -= primes[leftPost];
+      leftPost += 1;
+      termCount -= 1;
+      // And move rightPost back until reaching highestPrimeTermCount + 1
+      while (termCount > highestPrimeTermCount) {
+        runningSum -= primes[rightPost];
+        rightPost -= 1;
+        termCount -= 1;
       }
-      // Largest prime not exceeded.  Incrementing iteration variables.
-      currentTerms += 1;
-      currentSum += nextNumber;
-      // Checking if new sum is a prime
-      if (primeSubset.includes(currentSum)) {
-        maxTerms = currentTerms;
-        maxSum = currentSum;
-      }
+      if (runningSum > thresholdNumber) { break; }
     }
-
-    // Evaluating each subset of primeSubset, if they exist
-    if (subLength === 1) {
-      return { terms: maxTerms, sum: maxSum };
+    if (primes.includes(runningSum) && termCount > highestPrimeTermCount) {
+      highestPrime = runningSum;
+      highestPrimeTermCount = termCount;
     }
-    // Beginning subset evaluation
-    const nextSubset = primeSubset.slice(1);
-    const ret = maxxer(nextSubset, primeOriginal);
-    if (ret.terms > maxTerms) {
-      maxTerms = ret.terms;
-      maxSum = ret.sum;
-    } else if (ret.terms === maxTerms && ret.sum > maxSum) {
-      maxSum = ret.sum;
-    }
-    return { terms: maxTerms, sum: maxSum };
   }
-  // maxPrimeSum continues here
-  const primeArray = primeGen(thresholdNumber);
-  const returnArray = [];
-  const primeAnswer = maxxer(primeArray, primeArray);
-  returnArray.push(primeAnswer.sum);
-  returnArray.push(primeAnswer.terms);
-  return returnArray;
+  return [highestPrime, highestPrimeTermCount];
 }
 
 // Problem 1 results
@@ -106,5 +103,5 @@ const cumulativeSumResults = cumulativeSum([1, 2, 3, 4]);
 console.log(cumulativeSumResults);
 
 // Problem 3 results
-const maxPrimeSumResults = maxPrimeSum(500);
+const maxPrimeSumResults = maxPrimeSum(10000);
 console.log(maxPrimeSumResults);
