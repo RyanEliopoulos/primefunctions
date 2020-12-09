@@ -106,10 +106,7 @@ console.log(cumulativeSumResults);
 const maxPrimeSumResults = maxPrimeSum(10000);
 console.log(maxPrimeSumResults);
 
-
-
 /*
   Optimizations: Instead of recursing and calculating the entire subset of values, resulting in many redundant
   calculations, the system now "walks" the array of primes.
-
  */
